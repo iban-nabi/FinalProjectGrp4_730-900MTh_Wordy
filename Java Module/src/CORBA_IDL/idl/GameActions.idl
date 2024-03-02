@@ -1,0 +1,33 @@
+module CORBA_IDL{
+    exception NoWordException{};
+    exception ShortWordException{};
+    exception WordRepeatedException{};
+    exception InvalidWordException{};
+    exception UserNotFoundException{};
+    exception WrongCredentials{};
+    exception UserOnlineException{};
+
+
+    typedef string leaderboardList[5][2];
+    typedef char charList[17];
+    typedef sequence<string> words;
+    
+    interface GameActions {
+        void login(in string username, in string password) raises(UserNotFoundException,WrongCredentials,UserOnlineException);
+        long joinGame(in string username);
+        long getTimer(in long gameID);
+        words getGamePlayers(in long gameID);
+        void initializeGame(in long gameID);
+        boolean runGame(in long gameID);
+        void sendWord(in long gameID, in string username, in string word) raises (NoWordException, ShortWordException, WordRepeatedException,InvalidWordException);
+        charList getCharacters(in long gameID);
+        words getEnteredWords(in long gameID);
+        string getRoundWinner(in long gameID);
+        string getGameWinner(in long gameID);
+        long getNoWinInGame(in long gameID, in string username);
+        leaderboardList getLeaderboardWinList();
+        leaderboardList getLeaderBoardLongestWordsList();
+        void quitGame(in long gameID, in string username);
+        void logout(in string username);
+    };
+};
